@@ -1,0 +1,106 @@
+<template name="chat">
+	<script type="text/javascript">
+		MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+		var observer = new MutationObserver(function(mutations, observer) {
+		    // fired when a mutation occurs
+		    console.log(mutations, observer);
+		    // ...
+		});
+
+		// define what element should be observed by the observer
+		// and what types of mutations trigger the callback
+		observer.observe(document, {
+		  subtree: true,
+		  attributes: true
+		  //...
+		});
+	</script>
+	<div id="sharingLink" class="valign-wrapper">
+		{{#if username}}
+			<p class="valign center-align ">Send your friends <b>{{sharingLink}}</b> to add them to the chat.</p>
+		{{else}}
+			<p class="valign center-align ">Enter a username to join the chat.</p>
+		{{/if}}
+	</div>
+	<div id="messageContainer">
+		<br>
+		{{#each messages}}
+			{{#if iSent sender}}
+				<div class="row valign-wrapper">
+					<div class="offset-m8 waves-effect bubble-me col m3  z-depth-1">
+						<p>{{message}}</p>
+					</div>
+					<b class="m1 col left-align down">{{sender}}</b>
+				</div>
+			{{else}}
+				<div class="row valign-wrapper">
+					<b class="m1 col right-align valign down">{{sender}}    </b>
+					<div class="bubble offset-m1 col m3 waves-effect valign valign-wrapper  z-depth-1">
+						<p class="valign">{{message}}</p>
+					</div>
+				</div>
+			{{/if}}
+		{{/each}}
+	</div>
+	{{#if username}}
+		<form id="new-message"  class="col m12">
+			<input name="input" type="text" placeholder="Send a message">
+		</form>
+	{{else}}
+		<form id="username-form" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Enter a username to join the chat.">
+			<input name="input" type="text" placeholder="Enter a username to send messages" class="col m12">
+		</form>
+	{{/if}}
+	<style type="text/css">
+		*{
+			overflow: hidden;
+			font-size: 3vh;
+		}
+		#sharingLink{
+			height: 10vh;
+			font-size: 3vh;
+			margin-left: 5vh;
+		}
+		#messageContainer{
+			height: 80vh;
+			border: 1px solid #ddd;
+			overflow-y: scroll;
+			background-color: #ddd;
+		}
+		.row{
+			padding-bottom: 2vh;
+		}
+		form{
+			margin-left:2vh;
+			margin-right:2vh;
+			margin-top: 1vh;
+			margin-bottom: 0px;
+			padding-bottom: 0px;
+			bottom: 0;
+			height: 10vh;
+			background-color: #fff;
+		}
+		.bubble{
+			background-color: #efefef;
+			min-height: 8vh;
+			vertical-align: center;
+			border-radius: 3vh 3vh 3vh 0vh;
+		}
+		.bubble-me{
+			background-color: #1e88e5;
+			min-height: 8vh;
+			vertical-align: center;
+			text-align: right;
+			border-radius: 3vh 3vh 0vh 3vh;
+			color: white;
+		}
+		.down{
+			position: absolute;
+			bottom: 0;
+		}
+		.row{
+			position: relative;
+		}
+	</style>
+</template>
